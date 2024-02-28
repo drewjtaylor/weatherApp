@@ -1,0 +1,1 @@
+export const weatherAPIUrl = "https://api.weather.gov"
