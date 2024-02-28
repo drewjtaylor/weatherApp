@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import {weatherAPIUrl} from './util';
-import {ForecastTimeBlock} from './Components/ForecastTimeBlock';
+import ForecastTimeBlock from './Components/ForecastTimeBlock'
 
 function App() {
     const [userLatitude, setUserLatitude] = useState("Unknown")
     const [userLongitude, setUserLongitude] = useState("Unknown")
-    const [forecast, setForecast] = useState({});
+    const [forecast, setForecast] = useState([]);
 
     // Check permission and get location from the browser
     const setupLocation = () => {
@@ -55,7 +55,7 @@ function App() {
     // Function to display errors
     const showError = (err) => console.warn(`ERROR ${err.code}: ${err.message}`)
 
-
+  
   useEffect(setupLocation, []);
 
   // Fetch weather based on local long/lat
@@ -85,7 +85,7 @@ function App() {
 
         // Set the app's state for "forecastData" based on the response to the actual forecast link.
         const forecastData = await forecastResponse.json();
-        setForecast(forecastData);
+        setForecast(forecastData.properties.periods)
     };
 
     fetchLocationWeather();
@@ -95,7 +95,7 @@ function App() {
 
 
 
-
+  
 
   return (
     <div className="App">
@@ -106,7 +106,10 @@ function App() {
       </div>
       <div>
         <h4>Local forecast:</h4>
-              </div>
+        {forecast.map(timeBlock => {
+            return <ForecastTimeBlock />
+        })}
+      </div>
     </div>
   );
 }
