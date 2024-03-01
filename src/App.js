@@ -126,20 +126,15 @@ function App() {
 
     fetchLocationWeather();
   }, [userLatitude, userLongitude])
-
-
-
-
-console.log(location)
   
 
   return (
-    <div className="App">
+    <div className="App text-center">
         <div className="container">
             <div className="row">
                 <div className="col">
-                    <h3>Your location is:</h3>
-                    <p>{JSON.stringify(location)}</p>
+                    <h3>Your location is: {location.city}, {location.state} {location.zip}</h3>
+                    <p></p>
                 </div>
             </div>
 
@@ -162,7 +157,8 @@ console.log(location)
 
                 {/* Next arrow button spot */}
                 <div className="col-2">
-                    <button onClick={() => setTimeBlockNumber(timeBlockNumber+1)}>Next</button>
+                    {timeBlockNumber>12 ? null : <button onClick={() => setTimeBlockNumber(timeBlockNumber+1)}>Next</button>}
+                    
                 </div>
             </div>
 
