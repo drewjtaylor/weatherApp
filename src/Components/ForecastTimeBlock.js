@@ -5,7 +5,7 @@ const ForecastTimeBlock = ({ forecastDetails }) => {
         return <p>Failed to retrieve forecast details.</p>
     }
   
-    console.log(forecastDetails);
+    // console.log(forecastDetails);
     const {
         detailedForecast,
         icon,
