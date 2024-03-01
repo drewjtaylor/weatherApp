@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import {weatherAPIUrl} from './util';
 import ForecastTimeBlock from './Components/ForecastTimeBlock'
 
@@ -7,6 +8,7 @@ function App() {
     const [userLatitude, setUserLatitude] = useState("Unknown")
     const [userLongitude, setUserLongitude] = useState("Unknown")
     const [forecast, setForecast] = useState([]);
+    const [timeBlockNumber, setTimeBlockNumber] = useState(0);
 
     // Check permission and get location from the browser
     const setupLocation = () => {
@@ -94,22 +96,48 @@ function App() {
 
 
 
-
+console.log(timeBlockNumber)
   
 
   return (
     <div className="App">
-      <div>
-        <h3>Your location is:</h3>
-        <p>Latitude: {userLatitude}</p>
-        <p>Longitude: {userLongitude}</p>
-      </div>
-        <h4>Local forecast:</h4>
-      <div className="flex">
-        {forecast.map(forecastDetails => {
-            return <ForecastTimeBlock forecastDetails={forecastDetails}/>
-        })}
-      </div>
+        <div className="container">
+            <div className="row">
+                <div className="col">
+                    <h3>Your location is:</h3>
+                    <p>Latitude: {userLatitude}</p>
+                    <p>Longitude: {userLongitude}</p>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col">
+                    <h4>Local forecast:</h4>
+                </div>
+            </div>
+
+            <div className="row">
+                {/* Previous arrow button  */}
+                <div className="col-2">
+                    {timeBlockNumber===0 ? null : <button onClick={() => setTimeBlockNumber(timeBlockNumber-1)}>Back</button>}
+                </div>
+
+                {/* Currently selected time box */}
+                <div className="col-8">
+                    <ForecastTimeBlock forecastDetails={forecast[timeBlockNumber]}/>
+                </div>
+
+                {/* Next arrow button spot */}
+                <div className="col-2">
+                    <button onClick={() => setTimeBlockNumber(timeBlockNumber+1)}>Next</button>
+                </div>
+            </div>
+
+
+        <div> 
+
+        </div>
+        </div>
     </div>
   );
 }
