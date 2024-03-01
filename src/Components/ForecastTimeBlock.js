@@ -1,8 +1,14 @@
-import React from 'react'
+import "./ForecastTimeBlock.css";
 
-const ForecastTimeBlock = () => {
+
+const ForecastTimeBlock = ({forecastDetails}) => {
+    console.log(forecastDetails)
   return (
-    <div>ForecastTimeBlock</div>
+    <div className='forecastTimeBlock'>
+        <h4>{forecastDetails.name}</h4>
+
+
+    </div>
   )
 }
 
