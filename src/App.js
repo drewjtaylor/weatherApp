@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import {weatherAPIUrl} from './util';
-import ForecastTimeBlock from './Components/ForecastTimeBlock'
+import ForecastTimeBlock from './Components/ForecastTimeBlock';
+import {googleMapsEmbedAPI} from './keys'
 
 function App() {
     const [userLatitude, setUserLatitude] = useState("Unknown")
     const [userLongitude, setUserLongitude] = useState("Unknown")
     const [forecast, setForecast] = useState([]);
     const [timeBlockNumber, setTimeBlockNumber] = useState(0);
+    const [location, setLocation] = useState({
+        city: null,
+        state: null,
+        zip: null
+    })
 
     // Check permission and get location from the browser
     const setupLocation = () => {
@@ -54,11 +60,39 @@ function App() {
         }
     };
 
+    const lookupZip = () => {
+        // Do not try to do an api call before getting lat/long 
+        if (userLatitude === "Unknown" || userLongitude === "Unknown") {
+            return
+        }
+        
+        const getGoogleGeoData = async () => {
+            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLatitude},${userLongitude}&key=${googleMapsEmbedAPI}`)
+            if (!response.ok) {
+                return Promise.reject('Error retrieving google data from lat/long. Status: ' + response.status)
+            };
+
+            const googleGeoData = await response.json();
+            const locationData = googleGeoData.results[4].address_components;
+
+            setLocation({
+                city: locationData[1].long_name,
+                state: locationData[3].short_name,
+                zip: locationData[0].short_name
+            })
+        }
+        getGoogleGeoData();
+        }
+        
+
     // Function to display errors
     const showError = (err) => console.warn(`ERROR ${err.code}: ${err.message}`)
 
-  
+  // Retrieve location information from browser
   useEffect(setupLocation, []);
+
+  // Use Google API to look up location information from latitude and longitude
+  useEffect(lookupZip, [userLatitude, userLongitude]);
 
   // Fetch weather based on local long/lat
   useEffect(() => {
@@ -96,7 +130,7 @@ function App() {
 
 
 
-console.log(timeBlockNumber)
+console.log(location)
   
 
   return (
@@ -105,8 +139,7 @@ console.log(timeBlockNumber)
             <div className="row">
                 <div className="col">
                     <h3>Your location is:</h3>
-                    <p>Latitude: {userLatitude}</p>
-                    <p>Longitude: {userLongitude}</p>
+                    <p>{JSON.stringify(location)}</p>
                 </div>
             </div>
 
