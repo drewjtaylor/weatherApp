@@ -38,3 +38,8 @@ Tested Google's location API using postman until I figured it out.
 Updated code to retrieve location information from Google, then display that instead of coordinates.
 Deployed to netlify, set up CI/CD. Every push to "main" now updates public site.
 Google API key is stored in .env file on local machine, and as an environment variable in netlify.
+
+
+Possible improvements:
+Storing the API key as an environment variable is better than nothing, but from my reading it is not as safe as performing the API request on a back-end instead. If this was a full application that used a secure, premium API then it would be worth it to add the extra layer of obfuscation by running the requests through a back-end, such as a Google Cloud Function. For the purpose of this basic app though, that's beyond the scope and unnecessary.
+For an example of a site I made that does use this system, please check out [weeklydire.netlify.app](weeklydire.netlify.app)
