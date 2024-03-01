@@ -104,10 +104,10 @@ function App() {
         <p>Latitude: {userLatitude}</p>
         <p>Longitude: {userLongitude}</p>
       </div>
-      <div>
         <h4>Local forecast:</h4>
-        {forecast.map(timeBlock => {
-            return <ForecastTimeBlock />
+      <div className="flex">
+        {forecast.map(forecastDetails => {
+            return <ForecastTimeBlock forecastDetails={forecastDetails}/>
         })}
       </div>
     </div>
