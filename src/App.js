@@ -3,7 +3,6 @@ import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import {weatherAPIUrl} from './util';
 import ForecastTimeBlock from './Components/ForecastTimeBlock';
-import {googleMapsEmbedAPI} from './keys'
 
 function App() {
     const [userLatitude, setUserLatitude] = useState("Unknown")
@@ -67,7 +66,7 @@ function App() {
         }
         
         const getGoogleGeoData = async () => {
-            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLatitude},${userLongitude}&key=${googleMapsEmbedAPI}`)
+            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLatitude},${userLongitude}&key=${process.env.REACT_APP_GMAPAPIKEY}`)
             if (!response.ok) {
                 return Promise.reject('Error retrieving google data from lat/long. Status: ' + response.status)
             };
