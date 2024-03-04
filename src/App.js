@@ -148,11 +148,21 @@ function App() {
 
   console.log(forecast[timeBlockNumber]);
 
+  // Set up common language variables
+  const isRaining = forecast[timeBlockNumber]?.probabilityOfPrecipitation.value>50;
+  const isDaytime = forecast[timeBlockNumber]?.isDaytime;
+  const temperature = forecast[timeBlockNumber]?.temperature;
+
+  let timeOfDayBackground = null;
+  if (isDaytime) {
+    timeOfDayBackground = 'sunny'
+  }
+
   return (
-    <div className="App text-center">
+    <div className={`App text-center ${timeOfDayBackground}`}>
 
         {/* If the probability of precipitation is more than 50%, show the rain component */}
-        {forecast[timeBlockNumber]?.probabilityOfPrecipitation.value>50 ? <Rain /> : null}
+        {isRaining ? <Rain /> : null}
       <div className="container">
         <div className="row">
           <div className="col">

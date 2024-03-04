@@ -1,4 +1,4 @@
-import "./reset.css";
+// import "./reset.css";
 import "./rain.css";
 
 const Rain = () => {
