@@ -1,0 +1,3 @@
+Rain animation is from the guide at this link:
+
+https://www.codepel.com/animation/pure-css-rain-animation/

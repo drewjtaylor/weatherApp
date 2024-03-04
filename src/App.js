@@ -3,6 +3,7 @@ import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { weatherAPIUrl } from "./util";
 import ForecastTimeBlock from "./Components/ForecastTimeBlock";
+import Rain from "./Components/Rain/Rain";
 
 function App() {
   const [userLatitude, setUserLatitude] = useState("Unknown");
@@ -14,6 +15,7 @@ function App() {
     state: null,
     zip: null,
   });
+
 
   // Check permission and get location from the browser
   const setupLocation = () => {
@@ -35,7 +37,7 @@ function App() {
       navigator.permissions.query({ name: "geolocation" }).then((result) => {
         switch (result.state) {
           case "granted":
-            console.log("Permission granted");
+            console.log("Location Permission granted");
             navigator.geolocation.getCurrentPosition(
               getLocation,
               showError,
@@ -144,8 +146,13 @@ function App() {
     fetchLocationWeather();
   }, [userLatitude, userLongitude]);
 
+  console.log(forecast[timeBlockNumber]);
+
   return (
     <div className="App text-center">
+
+        {/* If the probability of precipitation is more than 50%, show the rain component */}
+        {forecast[timeBlockNumber].probabilityOfPrecipitation.value>50 ? <Rain /> : null}
       <div className="container">
         <div className="row">
           <div className="col">
