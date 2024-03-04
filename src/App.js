@@ -152,7 +152,7 @@ function App() {
     <div className="App text-center">
 
         {/* If the probability of precipitation is more than 50%, show the rain component */}
-        {forecast[timeBlockNumber].probabilityOfPrecipitation.value>50 ? <Rain /> : null}
+        {forecast[timeBlockNumber]?.probabilityOfPrecipitation.value>50 ? <Rain /> : null}
       <div className="container">
         <div className="row">
           <div className="col">
