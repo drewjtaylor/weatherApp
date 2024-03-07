@@ -6,6 +6,16 @@ import ForecastTimeBlock from "./Components/ForecastTimeBlock";
 import Rain from "./Components/Rain/Rain";
 
 function App() {
+    // Above this number, the "rain" effect will display
+    const rainProbabilityThreshold = 50;
+    
+    // Above this number, when it it is daytime, the backgroud will waver between yellow and orange
+    const heatwaveTemperatureThreshold = 85;
+    
+    // After this threshhold, there are no more time blocks returned by the API
+    const maxTimeBlocks=12
+
+
   const [userLatitude, setUserLatitude] = useState("Unknown");
   const [userLongitude, setUserLongitude] = useState("Unknown");
   const [forecast, setForecast] = useState([]);
@@ -45,7 +55,7 @@ function App() {
             );
             break;
           case "prompt":
-            console.log("Needto get permission");
+            console.log("Need to get permission");
             navigator.geolocation.getCurrentPosition(
               getLocation,
               showError,
@@ -59,7 +69,7 @@ function App() {
             break;
           default:
             console.log(
-              "You've reached the default message after checking geolocation permission"
+              "You've reached the default message after checking geolocation permission."
             );
         }
       });
@@ -87,7 +97,6 @@ function App() {
 
       const googleGeoData = await response.json();
       const locationData = googleGeoData.results[0].address_components;
-      console.log(locationData)
 
       setLocation({
         city: locationData[2].long_name,
@@ -149,7 +158,7 @@ function App() {
   console.log(forecast[timeBlockNumber]);
 
   // Set up common language variables
-  const isRaining = forecast[timeBlockNumber]?.probabilityOfPrecipitation.value>50;
+  const isRaining = forecast[timeBlockNumber]?.probabilityOfPrecipitation.value>rainProbabilityThreshold;
   const isDaytime = forecast[timeBlockNumber]?.isDaytime;
   const temperature = forecast[timeBlockNumber]?.temperature;
 
@@ -159,10 +168,10 @@ function App() {
   }
 
   return (
-    <div className={`App text-center ${timeOfDayBackground} ${isDaytime && temperature>85 ? 'heatwave' : null}`}>
+    <div className={`App text-center ${timeOfDayBackground} ${isDaytime && temperature>heatwaveTemperatureThreshold ? 'heatwave' : null}`}>
 
         {/* If the probability of precipitation is more than 50%, show the rain component */}
-        {isRaining ? <Rain /> : null}
+        {isRaining ? <Rain isDaytime={isDaytime}/> : null}
       <div className="container">
         <div className="row">
           <div className="col">
@@ -191,12 +200,12 @@ function App() {
 
           {/* Currently selected time box */}
           <div className="col-8">
-            <ForecastTimeBlock forecastDetails={forecast[timeBlockNumber]} />
+            <ForecastTimeBlock key={timeBlockNumber} forecastDetails={forecast[timeBlockNumber]} />
           </div>
 
           {/* Next arrow button spot */}
           <div className="col-2">
-            {timeBlockNumber > 12 ? null : (
+            {timeBlockNumber > maxTimeBlocks ? null : (
               <button onClick={() => setTimeBlockNumber(timeBlockNumber + 1)}>
                 Next
               </button>

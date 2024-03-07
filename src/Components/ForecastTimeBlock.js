@@ -5,11 +5,13 @@ const ForecastTimeBlock = ({ forecastDetails }) => {
         return <p>Failed to retrieve forecast details.</p>
     }
   
-    // console.log(forecastDetails);
+    // The forecastDetails object contains all of the properties below.
+    // Unused properties have been commented out, but kept in case of
+    // later use.
     const {
         detailedForecast,
         icon,
-        // isDayTime,
+        isDaytime,
         // name,
         // probabilityOfPrecipitation,
         // relativeHumidity,
@@ -28,7 +30,7 @@ const ForecastTimeBlock = ({ forecastDetails }) => {
       <h3>{forecastDetails.name}</h3>
       <h4>{shortForecast}</h4>
 
-      <p>Temperature: {temperature}°{temperatureUnit}</p>
+      <p>{isDaytime ? "High: " : "Low: "} {temperature}°{temperatureUnit}</p>
       <img src={icon} alt={`The sky, ${shortForecast}`} />
       <p>{detailedForecast}</p>
     </div>
