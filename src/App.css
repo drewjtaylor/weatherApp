@@ -19,3 +19,23 @@
         margin-right: 10vw;
     }
 }
+
+.heatWave {
+    animation: change-background 2s ease infinite
+  }
+
+  @keyFrames change-background {
+    0% {
+    background-color: #f3fa30;
+    /* background: #f3fa30; */
+    }
+    50% {
+    background-color: #ffac27;
+    /* background: #f3fa30; */
+    }
+    1000% {
+    background-color: #f3fa30;
+    /* background: #f3fa30; */
+    }
+
+  }
