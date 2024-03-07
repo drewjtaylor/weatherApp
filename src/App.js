@@ -159,7 +159,7 @@ function App() {
   }
 
   return (
-    <div className={`App text-center ${timeOfDayBackground} ${isDaytime && temperature>90 ? 'heatwave' : null}`}>
+    <div className={`App text-center ${timeOfDayBackground} ${isDaytime && temperature>85 ? 'heatwave' : null}`}>
 
         {/* If the probability of precipitation is more than 50%, show the rain component */}
         {isRaining ? <Rain /> : null}
