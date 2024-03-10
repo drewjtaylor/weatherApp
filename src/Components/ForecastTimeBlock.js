@@ -26,7 +26,7 @@ const ForecastTimeBlock = ({ forecastDetails }) => {
 
   
   return (
-    <div className="forecastTimeBlock p-3 text-center">
+    <div className={`forecastTimeBlock p-3 text-center${isDaytime ? " shadow-lg" : null}`}>
       <h3>{forecastDetails.name}</h3>
       <h4>{shortForecast}</h4>
 
