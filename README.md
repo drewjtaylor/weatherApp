@@ -3,7 +3,7 @@ A basic weather app, drawing from public APIs
 
 Before the API to look up the user's location will work, the .env file needs updated.
 
-If you're running a clone locally, you'll need to make a project with google cloud console and get an API key, then create and update the variable in the `src/.env` file like this:
+If you're running a clone locally, you'll need to make a project with google cloud console and get an API key, then create a `.env` file in the root directory, and update the variable like this:
 
 `REACT_APP_GMAPAPIKEY = "your-key-here"`
 
